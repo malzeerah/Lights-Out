@@ -1,0 +1,52 @@
+## Install and run RMariaDB
+install.packages("RMariaDB")
+library(RMariaDB) 
+
+## Create a database connection 
+con = dbConnect(MariaDB(), user='deepAnalytics',
+password='Sqltask1234!', dbname='dataanalytics2018', 
+host='data-analytics-2018.cbrosir2cswx.us-east-1.rds.amazonaws.com')
+
+## List the tables contained in the database 
+dbListTables(con)
+
+## Use asterisk to specify all attributes for download
+irisALL <- dbGetQuery(con, "SELECT * FROM iris")
+sixALL <- dbGetQuery(con, "SELECT * FROM yr_2006")
+sevenALL <- dbGetQuery(con, "SELECT * FROM yr_2007")
+eightALL <- dbGetQuery(con, "SELECT * FROM yr_2008")
+nineALL <- dbGetQuery(con, "SELECT * FROM yr_2009")
+tenALL <- dbGetQuery(con, "SELECT * FROM yr_2010")
+
+summary(sixALL)
+
+dbGetQuery(con, "SELECT distinct date FROM yr_2010" )
+
+## Use attribute names to specify specific attributes for download
+irisSELECT <- dbGetQuery(con, "SELECT SepalLengthCm, SepalWidthCm FROM iris")
+
+## Install and run dplyr
+install.packages("dplyr")
+library(dplyr)
+
+## Combine tables into one dataframe using dplyr
+newDF <- bind_rows(sevenALL, eightALL, nineALL)
+
+## Combine Date and Time attribute values in a new attribute column
+newDF <-cbind(newDF,paste(newDF$Date,newDF$Time), stringsAsFactors=FALSE)
+
+## Give the new attribute in the 11th column a header name 
+colnames(newDF)[11] <-"DateTime"
+
+## Move the DateTime attribute within the dataset
+newDF <- newDF[,c(ncol(newDF), 1:(ncol(newDF)-1))]
+head(newDF)
+
+## Convert DateTime from character to POSIXct 
+newDF$DateTime <- as.POSIXct(newDF$DateTime, "%Y/%m/%d %H:%M:%S")
+
+## Add the time zone
+attr(newDF$DateTime, "tzone") <- "Europe/Paris"
+
+## Inspect the data types
+str(newDF)
