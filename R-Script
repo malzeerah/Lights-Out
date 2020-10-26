@@ -1,11 +1,15 @@
+######################
+# Import & Download Data  
+######################
+
 ## Install and run RMariaDB
 install.packages("RMariaDB")
 library(RMariaDB) 
 
 ## Create a database connection 
 con = dbConnect(MariaDB(), user='deepAnalytics',
-password='Sqltask1234!', dbname='dataanalytics2018', 
-host='data-analytics-2018.cbrosir2cswx.us-east-1.rds.amazonaws.com')
+                password='Sqltask1234!', dbname='dataanalytics2018', 
+                host='data-analytics-2018.cbrosir2cswx.us-east-1.rds.amazonaws.com')
 
 ## List the tables contained in the database 
 dbListTables(con)
@@ -18,7 +22,35 @@ eightALL <- dbGetQuery(con, "SELECT * FROM yr_2008")
 nineALL <- dbGetQuery(con, "SELECT * FROM yr_2009")
 tenALL <- dbGetQuery(con, "SELECT * FROM yr_2010")
 
+######################
+# Pre-Processing  
+######################
+
 summary(sixALL)
+summary(sevenALL)
+summary(eightALL)
+summary(nineALL)
+summary(tenALL)
+
+
+str(sixALL)
+str(sevenALL)
+str(eightALL)
+str(nineALL)
+str(tenALL)
+
+is.na(sixALL)
+is.na(sevenALL)
+is.na(eightALL)
+is.na(nineALL)
+is.na(tenALL)
+
+anyNA(sixALL)
+anyNA(sevenALL)
+anyNA(eightALL)
+anyNA(nineALL)
+anyNA(tenALL)
+
 
 dbGetQuery(con, "SELECT distinct date FROM yr_2010" )
 
@@ -50,3 +82,50 @@ attr(newDF$DateTime, "tzone") <- "Europe/Paris"
 
 ## Inspect the data types
 str(newDF)
+
+## Install and run lubridate
+install.packages("lubridate")
+library(lubridate)
+
+## Create "year" attribute with lubridate
+newDF$year <- year(newDF$DateTime)
+
+## Create "quarter" attribute with lubridate
+newDF$quarter <- quarter(newDF$DateTime)
+
+## Create "month" attribute with lubridate
+newDF$month <- month(newDF$DateTime)
+
+## Create "week" attribute with lubridate
+newDF$week <- week(newDF$DateTime)
+
+## Create "day" attribute with lubridate
+newDF$day <- day(newDF$DateTime)
+
+## Create "hour" attribute with lubridate
+newDF$hour <- hour(newDF$DateTime)
+
+## Create "minute" attribute with lubridate
+newDF$minute <- minute(newDF$DateTime)
+
+## Create "weekdays" attribute with lubridate
+newDF$weekdays <- weekdays(newDF$DateTime)
+
+######################
+# EDA  
+######################
+
+## Plot
+plot(newDF$Sub_metering_1)
+
+plot(newDF$Sub_metering_2)
+
+plot(newDF$Sub_metering_3)
+
+hist(newDF$Sub_metering_1)
+
+hist(newDF$Sub_metering_2) 
+
+hist(newDF$Sub_metering_3)
+
+
