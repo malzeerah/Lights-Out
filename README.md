@@ -1,7 +1,7 @@
 # Lights-Out
 The 'Lights Out' project was performed as part of the University of Texas Data Analytics Certificate. 
 
-<br> <b> Objective:</b> analyze (using R) residential power usage to determine the duration of occupancy. 
+<br> <b> Objective:</b> Analyze (using R) residential power usage to determine the duration of occupancy. 
 
 <br> <b>Resource:</b> Data housed in AWS and extracted using the RMariaDB package (SQL).
 <br>Datasets contained minute-by-minute power usage from December 2006 - November 2010 with the following attributes: 
