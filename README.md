@@ -1,8 +1,14 @@
-# Lights-Out
-The 'Lights Out' project was performed as part of the University of Texas Data Analytics Certificate. 
+R | RStudio | Time Series
+## Project Overview 
 
 <br> <b> Objective:</b> Analyze (using R) residential power usage to determine the duration of occupancy. 
 
+
+## Code & Resources
+<b>R RStudio
+<br>
+<b>Packages:</b> RMariaDB, dplyr, lubridate
+<br><br>
 <br> <b>Resource:</b> Data housed in AWS and extracted using the RMariaDB package (SQL).
 <br>Datasets contained minute-by-minute power usage from December 2006 - November 2010 with the following attributes: 
 <ul>
@@ -17,9 +23,6 @@ The 'Lights Out' project was performed as part of the University of Texas Data A
 	<li>Sub-meter 3 (electric water-heater and air-conditioner)</li>
 </ul>
 
-<br><br>
-<b>Valuable Tips and Tricks From Excercise: </b>
-<ul>
-	<li>dplyr package| bind_rows function -- combines muliple datasets together into 1 dataset. newDF <- bind_rows(df1, df2, df3)</li>
-
-</ul>
+<br><br>	
+ 
+## Model Building & Performance
