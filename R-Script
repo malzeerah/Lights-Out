@@ -109,7 +109,7 @@ newDF$hour <- hour(newDF$DateTime)
 newDF$minute <- minute(newDF$DateTime)
 
 ## Create "weekdays" attribute with lubridate
-newDF$weekdays <- weekdays(newDF$DateTime)
+newDF$weekday <- wday(newDF$DateTime)
 
 ######################
 # EDA  
@@ -128,4 +128,248 @@ hist(newDF$Sub_metering_2)
 
 hist(newDF$Sub_metering_3)
 
+## Subset the second week of 2008 - All Observations
+houseWeek <- filter(newDF, year == 2008 & week == 2)
 
+## Plot subset houseWeek
+plot(houseWeek$Sub_metering_1)
+
+## Install and run plotly
+install.packages("plotly")
+library(plotly)
+ 
+## Subset the 9th day of January 2008 - All observations
+houseDay <- filter(newDF, year == 2008 & month == 1 & day == 9)
+
+## Plot sub-meter 1
+plot_ly(houseDay, x = ~houseDay$DateTime, y = ~houseDay$Sub_metering_1, type = 'scatter', mode = 'lines')
+
+## Plot sub-meter 1, 2 and 3 with title, legend and labels - All observations 
+plot_ly(houseDay, x = ~houseDay$DateTime, y = ~houseDay$Sub_metering_1, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~houseDay$Sub_metering_2, name = 'Laundry Room', mode = 'lines') %>%
+  add_trace(y = ~houseDay$Sub_metering_3, name = 'Water Heater & AC', mode = 'lines') %>%
+  layout(title = "Power Consumption January 9th, 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+## Subset the 9th day of January 2008 - 10 Minute frequency
+houseDay10 <- filter(newDF, year == 2008 & month == 1 & day == 9 & (minute == 0 | minute == 10 | minute == 20 | minute == 30 | minute == 40 | minute == 50))
+
+## Plot sub-meter 1, 2 and 3 with title, legend and labels - 10 Minute frequency
+plot_ly(houseDay10, x = ~houseDay10$DateTime, y = ~houseDay10$Sub_metering_1, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~houseDay10$Sub_metering_2, name = 'Laundry Room', mode = 'lines') %>%
+  add_trace(y = ~houseDay10$Sub_metering_3, name = 'Water Heater & AC', mode = 'lines') %>%
+  layout(title = "Power Consumption January 9th, 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+## Subset to one observation per week on Mondays at 8:00pm for 2007, 2008 and 2009
+house070809weekly <- filter(newDF, weekday == 2 & hour == 20 & minute == 1)
+
+str(house070809weekly)
+
+##########################################
+
+## Subset the 2nd week of January 2008 - All observations
+houseweek <- filter(newDF, year == 2008 & month == 1 & (day == 7 | day == 8 | day == 9 | day == 10 | day == 11) & (minute == 0 | minute == 10 | minute == 20 | minute == 30 | minute == 40 | minute == 50))
+
+## Plot sub-meter 1, 2 and 3 with title, legend and labels - 10 Minute frequency
+plot_ly(houseweek, x = ~houseweek$DateTime, y = ~houseweek$Sub_metering_1, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~houseweek$Sub_metering_2, name = 'Laundry Room', mode = 'lines') %>%
+  add_trace(y = ~houseweek$Sub_metering_3, name = 'Water Heater & AC', mode = 'lines') %>%
+  layout(title = "Power Consumption Jan 7th - 11th, 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+
+##########################################
+
+## Subset the 2nd week of January 2008 - All observations
+housemonth <- filter(newDF, year == 2008 & month == 1 & (hour == 0 |hour == 8 | hour == 16 | hour == 23  ))
+
+## Plot sub-meter 1, 2 and 3 with title, legend and labels - 10 Minute frequency
+plot_ly(housemonth, x = ~housemonth$DateTime, y = ~housemonth$Sub_metering_1, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~housemonth$Sub_metering_2, name = 'Laundry Room', mode = 'lines') %>%
+  add_trace(y = ~housemonth$Sub_metering_3, name = 'Water Heater & AC', mode = 'lines') %>%
+  layout(title = "Power Consumption January 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset the 2nd week of January 2008 - All observations
+house_ms8 <- filter(newDF, year == 2007) ##& month == 1 & (hour == 0 |hour == 8 | hour == 16 | hour == 23  ))
+
+## Plot sub-meter 1, 2 and 3 with title, legend and labels - 10 Minute frequency
+plot_ly(house_ms8, x = ~house_ms8$DateTime, y = ~house_ms8$Sub_metering_1, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~house_ms8$Sub_metering_2, name = 'Laundry Room', mode = 'lines') %>%
+  layout(title = "Power Consumption January 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset  2008 - All observations
+house08 <- filter(newDF, year == 2008 & (minute == 0 | minute == 30))
+## Plot sub-meter 1
+plot_ly(house08, x = ~house08$DateTime, y = ~house08$Sub_metering_3, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  layout(title = "Water Heater & AC Power Consumption 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset  2009 - All observations
+house09 <- filter(newDF, year == 2009 & (minute == 0 | minute == 30))
+## Plot sub-meter 1
+plot_ly(house08, x = ~house09$DateTime, y = ~house09$Sub_metering_2, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  layout(title = "Water Heater & AC Power Consumption 2008",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset  2009 - All observations
+house <- filter(newDF, (minute == 0 | minute == 30))
+## Plot sub-meter 1
+plot_ly(house, x = ~house$DateTime, y = ~house$Sub_metering_2, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  layout(title = "Laundry Power Consumption 2007 - 2009",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset  2010 - All observations
+house <- filter(tenALL, (minute == 0 | minute == 30))
+## Plot sub-meter 1
+plot_ly(house, x = ~house$DateTime, y = ~house$Sub_metering_2, name = 'Kitchen', type = 'scatter', mode = 'lines') %>%
+  layout(title = "Laundry Power Consumption 2007 - 2009",
+         xaxis = list(title = "Time"),
+         yaxis = list (title = "Power (watt-hours)"))
+
+##########################################
+
+## Subset  2008 - All observations
+house09 <- filter(newDF, year == 2009)
+## Plot sub-meter 2
+plot_ly(house09, x = ~house09$DateTime, y = ~house09$Sub_metering_2, type = 'scatter', mode = 'lines')
+
+##########################################
+## Subset  2009 - All observations
+house09 <- filter(newDF, year == 2009)
+## Plot sub-meter 2
+plot_ly(house09, x = ~house09$DateTime, y = ~house09$Sub_metering_2, type = 'scatter', mode = 'lines')
+
+##########################################
+
+## Subset  2008 - All observations
+house0830min <- filter(newDF, year == 2008 & (minute == 0 | minute == 30))
+
+## Plot sub-meter 3 in 2008
+plot_ly(house0830min, x = ~house0830min$DateTime, y = ~house0830min$Sub_metering_3, type = 'scatter', mode = 'lines')
+
+##########################################
+
+install.packages("ggplot2")
+install.packages("ggfortify")
+library(ggplot2)
+library(ggfortify)
+
+## Subset to one observation per week on Mondays at 8:00pm for 2007, 2008 and 2009
+house070809weekly <- filter(newDF, weekday == 2 & hour == 20 & minute == 1)
+
+## Create TS object with SubMeter3
+tsSM3_070809weekly <- ts(house070809weekly$Sub_metering_3, frequency=52, start=c(2007,1))
+
+## Plot sub-meter 3 with autoplot
+autoplot(tsSM3_070809weekly)
+
+## Plot sub-meter 3 with autoplot - add labels, color
+autoplot(tsSM3_070809weekly, ts.colour = 'blue', xlab = "Time", ylab = "Watt Hours", main = "Water Heater & AC")
+
+## Plot sub-meter 3 with plot.ts
+plot.ts(tsSM3_070809weekly)
+
+##########################################
+
+## Subset to one observation per week on Mondays at 8:00pm for 2007, 2008 and 2009
+house070809weekly <- filter(newDF, weekday == 2 & hour == 20 & minute == 1)
+
+## Create TS object with SubMeter2
+tsSM2_070809weekly <- ts(house070809weekly$Sub_metering_2, frequency=52, start=c(2007,1))
+
+## Plot sub-meter 2 with autoplot - add labels, color
+autoplot(tsSM2_070809weekly, ts.colour = 'orange', xlab = "Time", ylab = "Watt Hours", main = "Laundry Room")
+
+##########################################
+
+## Subset to one observation per week on Mondays at 8:00pm for 2007, 2008 and 2009
+house070809weekly <- filter(newDF, weekday == 2 & hour == 20 & minute == 1)
+
+## Create TS object with SubMeter1
+tsSM1_070809weekly <- ts(house070809weekly$Sub_metering_1, frequency=52, start=c(2007,1))
+
+## Plot sub-meter 1 with autoplot - add labels, color
+autoplot(tsSM1_070809weekly, ts.colour = 'blue', xlab = "Time", ylab = "Watt Hours", main = "Kitchen")
+
+##########################################
+
+## Apply time series linear regression to the sub-meter 3 ts object and use summary to obtain R2 and RMSE from the model you built
+install.packages("forecast")
+library(forecast)
+fitSM3 <- tslm(tsSM3_070809weekly ~ trend + season) 
+summary(fitSM3)
+
+## Create the forecast for sub-meter 3. Forecast ahead 20 time periods 
+forecastfitSM3 <- forecast(fitSM3, h=20)
+## Plot the forecast for sub-meter 3. 
+plot(forecastfitSM3)
+
+## Create sub-meter 3 forecast with confidence levels 80 and 90
+forecastfitSM3c <- forecast(fitSM3, h=20, level=c(80,90))
+
+## Plot sub-meter 3 forecast, limit y and add labels
+plot(forecastfitSM3c, ylim = c(0, 20), ylab= "Watt-Hours", xlab="Time")
+
+###################################
+
+fitSM2 <- tslm(tsSM2_070809weekly ~ trend + season) 
+summary(fitSM2)
+
+## Create the forecast for sub-meter 2. Forecast ahead 20 time periods 
+forecastfitSM2 <- forecast(fitSM2, h=20)
+
+## Create sub-meter 2 forecast with confidence levels 80 and 90
+forecastfitSM2c <- forecast(fitSM2, h=20, level=c(80,90))
+
+## Plot sub-meter 2 forecast, limit y and add labels
+plot(forecastfitSM2c, ylim = c(0, 70), ylab= "Watt-Hours", xlab="Time")
+
+###################################
+
+fitSM1 <- tslm(tsSM1_070809weekly ~ trend + season) 
+summary(fitSM1)
+
+## Create the forecast for sub-meter 1. Forecast ahead 20 time periods 
+forecastfitSM1 <- forecast(fitSM1, h=20)
+
+## Create sub-meter 1 forecast with confidence levels 80 and 90
+forecastfitSM1c <- forecast(fitSM1, h=20, level=c(80,90))
+
+## Plot sub-meter 1 forecast, limit y and add labels
+plot(forecastfitSM1c, ylim = c(0, 40), ylab= "Watt-Hours", xlab="Time")
+
+###################################
+
+## Decompose Sub-meter 3 into trend, seasonal and remainder
+components070809SM3weekly <- decompose(tsSM3_070809weekly)
+## Plot decomposed sub-meter 3 
+plot(components070809SM3weekly)
+## Check summary statistics for decomposed sub-meter 3 
+summary(components070809SM3weekly)
+
+###################################
+
+## Seasonal adjusting sub-meter 3 by subtracting the seasonal component & plot
+tsSM3_070809Adjusted <- tsSM3_070809weekly - components070809SM3weekly$seasonal
+autoplot(tsSM3_070809Adjusted)
