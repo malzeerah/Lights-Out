@@ -23,4 +23,3 @@ R | RStudio | Time Series
 	<li>Sub-meter 3 (electric water-heater and air-conditioner)</li>
 </ul>	
 	
-## Model Building & Performance
