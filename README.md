@@ -21,8 +21,5 @@ R | RStudio | Time Series
 	<li>Sub-meter 1 (dishwasher, oven and microwave)</li>
  	<li>Sub-meter 2 (washing-machine, tumble-drier, refrigerator and light)</li>
 	<li>Sub-meter 3 (electric water-heater and air-conditioner)</li>
-</ul>
-
-<br><br>	
- 
+</ul>	
 ## Model Building & Performance
